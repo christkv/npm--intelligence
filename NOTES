@@ -1,0 +1,15 @@
+# What queries to do
+1. Sort by last 30 days worth of downloads ?
+2. Sort by fastest growing ?
+
+# What to show
+
+1. Module view
+  a. Module meta data information.
+  b. Downloads chart by groupings of every 30 days.
+  c. List of contributors.
+    1. Most active contributors in last 60 days.
+    2. Most contributing contributors over the life time.
+  d. Most popular dependent modules by downloads in the last 30 days.
+
+2. Main view.
