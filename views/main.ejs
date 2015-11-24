@@ -4,6 +4,7 @@
     <thead>
       <tr>
         <th>Module</th>
+        <th>Downloads last 30 days</th>
         <th>Total Downloads</th>
       </tr>
     </thead>
@@ -11,6 +12,7 @@
       <% for(var i = 0; i < modules.length; i++) { %>
       <tr>
         <td><a href='/module/<%= modules[i].name %>'><%= modules[i].name %></a></td>
+        <td><%= modules[i].stats.last30days %></td>
         <td><%= modules[i].stats.total %></td>
       </tr>
       <% } %>

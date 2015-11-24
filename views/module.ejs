@@ -67,6 +67,7 @@
     <thead>
       <tr>
         <th>Module</th>
+        <th>Downloads last 30 days</th>
         <th>Total Downloads</th>
         <th>Downloads Per Year</th>
       </tr>
@@ -75,6 +76,7 @@
       <% for(var i = 0; i < dependentsByName.length; i++) { %>
       <tr>
         <td><a href='/module/<%= dependentsByName[i].name %>'><%= dependentsByName[i].name %></a></td>
+        <td><%= dependentsByName[i].stats.last30days %></td>
         <td><%= dependentsByName[i].stats.total %></td>
         <td><%- dependentsByName[i].stats.perYears.reverse().map(function(x) {
           return moment(x.start).format("YYYY") + " = " + x.value;

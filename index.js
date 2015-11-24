@@ -36,8 +36,13 @@ var main = function(title, db) {
         // Fetch all dependency downloads, sort by the total download stats
         var modules = yield db.collection('downloads')
           .find({})
-          .project({'name':1, 'stats.total':1, 'stats.perYears':1})
-          .sort({'stats.total':-1}).limit(50).toArray();
+          .project({
+            'name':1,
+            'stats.total':1,
+            'stats.last30days':1,
+            'stats.perYears':1
+          })
+          .sort({'stats.last30days':-1}).limit(50).toArray();
 
         // Render the main template
         var body = yield render('main', {
@@ -126,7 +131,12 @@ var module_view = function(title, db) {
             name: {
               $in: results[2].dependents
             }
-          }).project({'name':1, 'stats.total':1, 'stats.perYears':1}).sort({'stats.total':-1}).toArray();
+          }).project({
+            'name':1,
+            'stats.last30days':1,
+            'stats.total':1,
+            'stats.perYears':1
+          }).sort({'stats.last30days':-1}).toArray();
         }
 
         // Generate the values
