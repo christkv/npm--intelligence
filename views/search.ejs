@@ -1,4 +1,4 @@
-<h2 class="sub-header">Top 50 modules by downloads</h2>
+<h2 class="sub-header">Search Results</h2>
 <div class="table-responsive">
   <table class="table table-striped">
     <thead>
@@ -11,7 +11,7 @@
       <% for(var i = 0; i < modules.length; i++) { %>
       <tr>
         <td><a href='/module/<%= modules[i].name %>'><%= modules[i].name %></a></td>
-        <td><%= modules[i].stats.total %></td>
+        <td><%= modules[i].description %></td>
       </tr>
       <% } %>
     </tbody>

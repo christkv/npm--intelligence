@@ -7,6 +7,10 @@ body {
   padding-top: 50px;
 }
 
+/* Bar graph options */
+.bar_graph {
+  height: 200;
+}
 
 /*
  * Global add-ons

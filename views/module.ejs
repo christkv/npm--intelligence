@@ -1,0 +1,87 @@
+<h1 class="page-header"><%= name %></h1>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Description</h3>
+  </div>
+  <div class="panel-body">
+    <%= module.description %>
+  </div>
+</div>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Downloads of Module per Month</h3>
+  </div>
+  <div class="panel-body">
+    <div id='ct-chart' class='bar_graph'></div>
+  </div>
+</div>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Module information</h3>
+  </div>
+  <div class="panel-body">
+    <div class="row placeholder">
+      <div class="col-xs-6 col-md-6">
+        <div class="list-group">
+          <div class="list-group-item">
+            <h4 class="list-group-item-heading" style="text-align:left;">Repository</h4>
+            <p class="list-group-item-text"><%= module.repository.url %></p>
+          </div>
+          <div class="list-group-item">
+            <h4 class="list-group-item-heading" style="text-align:left;">Homepage</h4>
+            <p class="list-group-item-text">
+              <a href="<%= module.homepage %>"><%= module.homepage %></a>
+            </p>
+          </div>
+          <div class="list-group-item">
+            <h4 class="list-group-item-heading" style="text-align:left;">Author</h4>
+            <p class="list-group-item-text">
+              <%= module.author.name %>
+            </p>
+            <p class="list-group-item-text">
+              <%= module.author.email %>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-6 col-md-6">
+        <div class="list-group">
+          <div class="list-group-item">
+            <h4 class="list-group-item-heading" style="text-align:left;">Last 10 Versions</h4>
+            <p class="list-group-item-text">
+              <% var versions =  module.versions.reverse();
+                 for(var i = 0; i < (versions.length > 10 ? 10 : versions.length); i++) { %>
+                <a href="<%= module.homepage %>/commit/<%= versions[i].gitHead %>"><%= versions[i].version %></a>
+              <% } %>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h2 class="sub-header">Dependent Modules</h2>
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Module</th>
+        <th>Total Downloads</th>
+        <th>Downloads Per Year</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for(var i = 0; i < dependentsByName.length; i++) { %>
+      <tr>
+        <td><a href='/module/<%= dependentsByName[i].name %>'><%= dependentsByName[i].name %></a></td>
+        <td><%= dependentsByName[i].stats.total %></td>
+        <td><%- dependentsByName[i].stats.perYears.reverse().map(function(x) {
+          return moment(x.start).format("YYYY") + " = " + x.value;
+        }).join('<br/>') %></td>
+      </tr>
+      <% } %>
+    </tbody>
+  </table>
+</div>
+<%- bar_graph %>
