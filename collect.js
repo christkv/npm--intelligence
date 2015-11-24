@@ -282,17 +282,27 @@ var updateModule = function(moduleName, db, options) {
   });
 }
 
-// Connect to mongodb
-co(function*() {
-  // Get the database
-  db = yield MongoClient.connect(url);
-  // Module name
-  var moduleName = 'mongodb';
-  // Resolve the module
-  yield updateModule(moduleName, db, {resolveDependents:true});
-  // Return
-  db.close();
-}).catch(function(err) {
-  console.log(err.stack);
-  if(db) db.close();
-});
+// Execute the method
+var execute = function() {
+  // Connect to mongodb
+  co(function*() {
+    // Get the database
+    db = yield MongoClient.connect(url);
+    // Module name
+    var moduleName = 'mongodb';
+    // Resolve the module
+    yield updateModule(moduleName, db, {resolveDependents:true});
+    // Return
+    db.close();
+    // Wait for 24h and rerun
+    setTimeout(function() {
+      execute();
+    }, (1000 * 60 * 60 * 24));
+  }).catch(function(err) {
+    console.log(err.stack);
+    if(db) db.close();
+  });
+}
+
+// Execute collection of modules
+execute();
