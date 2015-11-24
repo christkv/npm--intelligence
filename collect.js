@@ -93,7 +93,7 @@ var sumDownloadsRange = function(start, end, downloads) {
 }
 
 var sumDownloadsByWeeks = function(initial, weeks, downloads) {
-  var date = moment().subtract(1, 'week');
+  var date = moment();
   var results = [];
 
   for(var i = 0; i < weeks; i++) {
@@ -115,7 +115,7 @@ var sumDownloadsByWeeks = function(initial, weeks, downloads) {
 }
 
 var sumDownloadsByMonths = function(initial, months, downloads) {
-  var date = moment().subtract(1, 'month');
+  var date = moment();
   var results = [];
 
   for(var i = 0; i < months; i++) {
@@ -231,11 +231,10 @@ var updateModule = function(moduleName, db, options) {
 
       // Let's aggregate up the download values
       // Establish the range of the last 30 days
-      var end = new Date();
-      var start = new Date();
-      start.setHours(-1 * (30 * 24));
+      var end = moment(new Date());
+      var start = end.clone().subtract(30, 'day');
       // Total downloads
-      var lastThirtyDays = sumDownloadsRange(start, end, m);
+      var lastThirtyDays = sumDownloadsRange(start.toDate(), end.toDate(), m);
 
       // Downloads per week
       var downloadsPerWeek = sumDownloadsByWeeks(new Date(), 54 * 4, m);
@@ -299,6 +298,8 @@ var seedModules = [
   'mongodb-log', 'mongodb-ns', 'mongodb-runner', 'mongodb-schema', 'mongodb-security', 'mongodb-top', 'mongodb-trigger',
   'mongodb-url', 'mongodb-version-list', 'mongodb-version-manager', 'mongoscope-client'
 ];
+
+// var seedModules = ['sycamore-platform']
 
 // Execute the method
 var execute = function() {
