@@ -298,7 +298,7 @@ var seedModules = [
   'mongodb-extended-json', 'mongodb-favicon', 'mongodb-index-model', 'mongodb-instance-model', 'mongodb-js-precommit',
   'mongodb-log', 'mongodb-ns', 'mongodb-runner', 'mongodb-schema', 'mongodb-security', 'mongodb-top', 'mongodb-trigger',
   'mongodb-url', 'mongodb-version-list', 'mongodb-version-manager', 'mongoscope-client'
-]
+];
 
 // Execute the method
 var execute = function() {
@@ -314,6 +314,7 @@ var execute = function() {
 
     // Return
     db.close();
+    console.log('[waiting 24h for another scan]');
     // Wait for 24h and rerun
     setTimeout(function() {
       execute();
