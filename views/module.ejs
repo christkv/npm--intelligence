@@ -25,7 +25,7 @@
         <div class="list-group">
           <div class="list-group-item">
             <h4 class="list-group-item-heading" style="text-align:left;">Repository</h4>
-            <p class="list-group-item-text"><%= module.repository.url %></p>
+            <p class="list-group-item-text"><%= module.repository ? module.repository.url : '' %></p>
           </div>
           <div class="list-group-item">
             <h4 class="list-group-item-heading" style="text-align:left;">Homepage</h4>
@@ -36,10 +36,10 @@
           <div class="list-group-item">
             <h4 class="list-group-item-heading" style="text-align:left;">Author</h4>
             <p class="list-group-item-text">
-              <%= module.author.name %>
+              <%= module.author ? module.author.name : '' %>
             </p>
             <p class="list-group-item-text">
-              <%= module.author.email %>
+              <%= module.author ? module.author.email : '' %>
             </p>
           </div>
         </div>
