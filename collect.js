@@ -289,16 +289,29 @@ var updateModule = function(moduleName, db, options) {
   });
 }
 
+// Seed modules
+var seedModules = [
+  'mongodb', 'electron-installer-dmg', 'electron-installer-fixture-windows', 'electron-installer-squirrel-windows',
+  'electron-squirrel-startup', 'eslint-config-mongodb-js', 'evergreen', 'get-mongodb-version', 'jsonpatch-to-mongodb',
+  'jsonpath-to-dot', 'mongodb-bridge', 'mongodb-collection-model', 'mongodb-collection-sample', 'mongodb-connection-model',
+  'mongodb-database-model', 'mongodb-datasets', 'mongodb-dbpath', 'mongodb-deployment-model', 'mongodb-download-url',
+  'mongodb-extended-json', 'mongodb-favicon', 'mongodb-index-model', 'mongodb-instance-model', 'mongodb-js-precommit',
+  'mongodb-log', 'mongodb-ns', 'mongodb-runner', 'mongodb-schema', 'mongodb-security', 'mongodb-top', 'mongodb-trigger',
+  'mongodb-url', 'mongodb-version-list', 'mongodb-version-manager', 'mongoscope-client'
+]
+
 // Execute the method
 var execute = function() {
   // Connect to mongodb
   co(function*() {
     // Get the database
     db = yield MongoClient.connect(url);
-    // Module name
-    var moduleName = 'mongodb';
-    // Resolve the module
-    yield updateModule(moduleName, db, {resolveDependents:true});
+
+    // Iterate over all the seed modules and resolve it
+    for(var i = 0; i < seedModules.length; i++) {
+      yield updateModule(seedModules[i], db, {resolveDependents:true});
+    }
+
     // Return
     db.close();
     // Wait for 24h and rerun
