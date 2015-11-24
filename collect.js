@@ -241,11 +241,16 @@ var updateModule = function(moduleName, db, options) {
       // Downloads per year
       var downloadsPerYear= sumDownloadsByYears(new Date(), 4, m);
 
+      // Total
+      var total = 0;
+      m.forEach(function(x) { total = total + x.value; })
+
       // Store the information about downloads
       yield db.collection('downloads').replaceOne({
         name: moduleName
       }, {
         name: moduleName, downloads: m, stats: {
+          total: total,
           last30days: lastThirtyDays,
           perWeek: downloadsPerWeek,
           perMonth: downloadsPerMonth,
@@ -284,7 +289,7 @@ co(function*() {
   // Module name
   var moduleName = 'mongodb';
   // Resolve the module
-  yield updateModule(moduleName, db, {resolveDependents:false});
+  yield updateModule(moduleName, db, {resolveDependents:true});
   // Return
   db.close();
 }).catch(function(err) {
