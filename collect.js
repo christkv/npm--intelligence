@@ -158,6 +158,11 @@ var sumDownloadsByYears = function(initial, years, downloads) {
   return results;
 }
 
+// Modules to resolve
+var modulesToResolve = {
+  "mongoose": true
+}
+
 /*
  * Download the meta information about a specific module
  */
@@ -272,7 +277,9 @@ var updateModule = function(moduleName, db, options) {
         // For each of the dependents resolve the data and update them
         for(var i = 0; i < dependents.length; i++) {
           console.log("[fetching dependent] " + dependents[i]);
-          yield updateModule(dependents[i], db, {resolveDependents:false});
+          yield updateModule(dependents[i], db, {
+            resolveDependents: modulesToResolve[moduleName] ? true : false
+          });
         }
       }
 
