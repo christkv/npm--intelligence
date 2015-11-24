@@ -278,7 +278,7 @@ var updateModule = function(moduleName, db, options) {
         for(var i = 0; i < dependents.length; i++) {
           console.log("[fetching dependent] " + dependents[i]);
           yield updateModule(dependents[i], db, {
-            resolveDependents: modulesToResolve[moduleName] ? true : false
+            resolveDependents: modulesToResolve[dependents[i]] == true
           });
         }
       }
