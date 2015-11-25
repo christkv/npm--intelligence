@@ -352,7 +352,7 @@ var aggregateAllModulesPrMonth = function(root, modules, comparative) {
     }
 
     x.stats.perMonth.slice(0, 24).reverse().forEach(function(y) {
-      var date = moment(x.start);
+      var date = moment(y.start);
       labels.push(date.format("M/YY"));
       values.push(y.value);
     });
@@ -400,7 +400,7 @@ var aggregatePrMonth = function(root, modules) {
     var labels = [], values = [];
 
     x.stats.perMonth.slice(0, 24).reverse().forEach(function(y) {
-      var date = moment(x.start);
+      var date = moment(y.start);
       labels.push(date.format("M/YY"));
       values.push(y.value);
     });
@@ -429,7 +429,7 @@ var aggregatePrMonthInSingleGraph = function(root, modules) {
     if(i > 0) names.push(x.name);
 
     x.stats.perMonth.slice(0, 24).reverse().forEach(function(y,j) {
-      var date = moment(x.start);
+      var date = moment(y.start);
       labels[j] = date.format("M/YY");
       values[i].value.push(y.value);
     });
