@@ -300,7 +300,7 @@ var seedModules = [
   'mongodb-log', 'mongodb-ns', 'mongodb-runner', 'mongodb-schema', 'mongodb-security', 'mongodb-top', 'mongodb-trigger',
   'mongodb-url', 'mongodb-version-list', 'mongodb-version-manager', 'mongoscope-client',
   // Db's to check up against
-  'mysql', 'pg', 'redis','rethinkdb','mssql', 'cassandra-driver'
+  'mysql', 'pg', 'redis','rethinkdb','mssql', 'cassandra-driver', 'nano'
 ];
 
 // var seedModules = ['sycamore-platform']
