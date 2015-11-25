@@ -306,16 +306,20 @@ var module_compare_result = function(title, db) {
         }
 
         if(!aggregate) {
-          var compare = aggregatePrMonthInSingleGraph('#compare_graph', compareModules);
+          var compare = aggregatePrMonthInSingleGraph('#compare_graph',
+            [mainModule].concat(compareModules)
+          );
         } else {
-          var compare = aggregateAllModulesPrMonth('#compare_graph', compareModules);
+          var compare = aggregateAllModulesPrMonth('#compare_graph',
+            compareModules, mainModule
+          );
         }
 
         // Render the main template
         var body = yield render('compare_results', {
-          main: aggregatePrMonth('#main_graph', [mainModule]),
           compare: compare,
-          query: query
+          query: query,
+          name: compare1
         });
 
         // Render the final module
@@ -332,7 +336,7 @@ var module_compare_result = function(title, db) {
   }
 }
 
-var aggregateAllModulesPrMonth = function(root, modules) {
+var aggregateAllModulesPrMonth = function(root, modules, comparative) {
   var max = 0;
   var index = 0;
   var names = [];
@@ -367,13 +371,28 @@ var aggregateAllModulesPrMonth = function(root, modules) {
     });
   });
 
+  var finalValues = [{
+    name: names.join(','),
+    value: longest.values
+  }];
+
+  if(comparative) {
+    var vals = [];
+    // Generate all the values
+    comparative.stats.perMonth.reverse().forEach(function(y) {
+      vals.push(y.value);
+    });
+
+    finalValues.push({
+      name: comparative.name, value: vals
+    });
+  }
+
+  // Return the graph
   return [{
     module: {name: names.join(',') },
     div: f('%s_0', root.replace('#', '')),
-    graph: singleBarGraphRender(f('%s_0', root), longest.labels, [{
-      name: names.join(','),
-      value: longest.values
-    }])
+    graph: singleBarGraphRender(f('%s_0', root), longest.labels, finalValues)
   }];
 }
 
@@ -407,7 +426,8 @@ var aggregatePrMonthInSingleGraph = function(root, modules) {
       name: x.name,
       value: []
     };
-    names.push(x.name);
+
+    if(i > 0) names.push(x.name);
 
     x.stats.perMonth.reverse().forEach(function(y,j) {
       var date = moment(x.start);
