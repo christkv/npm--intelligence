@@ -73,10 +73,6 @@ var singleBarGraphRender = function(div, labels, series) {
   var barGraphCode = function(div, labels, series) {
     // // console.log(series)
     series = !Array.isArray(series) ? [series] : series;
-    console.log(series)
-
-    // console.log(JSON.stringify(series))
-    console.log(series[0])
 
     var chart = new Chartist.Line(div, {
       labels: labels,
@@ -88,6 +84,9 @@ var singleBarGraphRender = function(div, labels, series) {
       ],
       axisY: {
         scaleMinSpace: 25
+      },
+      axisX: {
+        scaleMinSpace: 100
       }
     });
   }
@@ -144,7 +143,7 @@ var module_view = function(title, db) {
         }
 
         // Generate the values
-        results[1].stats.perMonth.reverse().forEach(function(x) {
+        results[1].stats.perMonth.slice(0, 24).reverse().forEach(function(x) {
           var date = moment(x.start);
           labels.push(date.format("M/YY"));
           values.push(x.value);
@@ -352,7 +351,7 @@ var aggregateAllModulesPrMonth = function(root, modules, comparative) {
       index = i;
     }
 
-    x.stats.perMonth.reverse().forEach(function(y) {
+    x.stats.perMonth.slice(0, 24).reverse().forEach(function(y) {
       var date = moment(x.start);
       labels.push(date.format("M/YY"));
       values.push(y.value);
@@ -379,7 +378,7 @@ var aggregateAllModulesPrMonth = function(root, modules, comparative) {
   if(comparative) {
     var vals = [];
     // Generate all the values
-    comparative.stats.perMonth.reverse().forEach(function(y) {
+    comparative.stats.perMonth.slice(0, 24).reverse().forEach(function(y) {
       vals.push(y.value);
     });
 
@@ -400,7 +399,7 @@ var aggregatePrMonth = function(root, modules) {
   return modules.map(function(x, i) {
     var labels = [], values = [];
 
-    x.stats.perMonth.reverse().forEach(function(y) {
+    x.stats.perMonth.slice(0, 24).reverse().forEach(function(y) {
       var date = moment(x.start);
       labels.push(date.format("M/YY"));
       values.push(y.value);
@@ -429,7 +428,7 @@ var aggregatePrMonthInSingleGraph = function(root, modules) {
 
     if(i > 0) names.push(x.name);
 
-    x.stats.perMonth.reverse().forEach(function(y,j) {
+    x.stats.perMonth.slice(0, 24).reverse().forEach(function(y,j) {
       var date = moment(x.start);
       labels[j] = date.format("M/YY");
       values[i].value.push(y.value);
