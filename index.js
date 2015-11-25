@@ -71,29 +71,25 @@ var main = function(title, db) {
 var singleBarGraphRender = function(div, labels, series) {
   // The bar graph code
   var barGraphCode = function(div, labels, series) {
-    var data = {
+    // // console.log(series)
+    series = !Array.isArray(series) ? [series] : series;
+    console.log(series)
+
+    // console.log(JSON.stringify(series))
+    console.log(series[0])
+
+    var chart = new Chartist.Line(div, {
       labels: labels,
-      series: [
-        series
-      ]
-    };
-
-    var options = {
-      seriesBarDistance: 2
-    };
-
-    var responsiveOptions = [
-      ['screen and (max-width: 640px)', {
-        seriesBarDistance: 5,
-        axisX: {
-          labelInterpolationFnc: function (value) {
-            return value[0];
-          }
-        }
-      }]
-    ];
-
-    new Chartist.Bar(div, data, options, responsiveOptions);
+      series:series
+    }, {
+      scaleMinSpace: 20,
+      plugins: [
+        Chartist.plugins.tooltip()
+      ],
+      axisY: {
+        scaleMinSpace: 25
+      }
+    });
   }
 
   // Generate the template string that is passed to the browser
@@ -156,7 +152,9 @@ var module_view = function(title, db) {
 
         // Render the main template
         var body = yield render('module', {
-          bar_graph: singleBarGraphRender('#ct-chart', labels, values),
+          bar_graph: singleBarGraphRender('#ct-chart', labels, [{
+            name: npmModule, value: values
+          }]),
           name: npmModule,
           module: results[0],
           downloads: results[1],
@@ -308,7 +306,7 @@ var module_compare_result = function(title, db) {
         }
 
         if(!aggregate) {
-          var compare = aggregatePrMonth('#compare_graph', compareModules);
+          var compare = aggregatePrMonthInSingleGraph('#compare_graph', compareModules);
         } else {
           var compare = aggregateAllModulesPrMonth('#compare_graph', compareModules);
         }
@@ -372,7 +370,10 @@ var aggregateAllModulesPrMonth = function(root, modules) {
   return [{
     module: {name: names.join(',') },
     div: f('%s_0', root.replace('#', '')),
-    graph: singleBarGraphRender(f('%s_0', root), longest.labels, longest.values)
+    graph: singleBarGraphRender(f('%s_0', root), longest.labels, [{
+      name: names.join(','),
+      value: longest.values
+    }])
   }];
 }
 
@@ -389,9 +390,37 @@ var aggregatePrMonth = function(root, modules) {
     return {
       module: x,
       div: f('%s_%s', root.replace('#', ''), i),
-      graph: singleBarGraphRender(f('%s_%s', root, i), labels, values)
+      graph: singleBarGraphRender(f('%s_%s', root, i), labels, {
+        name: x.name, value: values
+      })
     }
   });
+}
+
+var aggregatePrMonthInSingleGraph = function(root, modules) {
+  var values = [];
+  var labels = [];
+  var names = [];
+
+  modules.forEach(function(x, i) {
+    values[i] = {
+      name: x.name,
+      value: []
+    };
+    names.push(x.name);
+
+    x.stats.perMonth.reverse().forEach(function(y,j) {
+      var date = moment(x.start);
+      labels[j] = date.format("M/YY");
+      values[i].value.push(y.value);
+    });
+  });
+
+  return [{
+    module: {name: names.join(',') },
+    div: f('%s_0', root.replace('#', '')),
+    graph: singleBarGraphRender(f('%s_0', root), labels, values)
+  }];
 }
 
 // Var application title

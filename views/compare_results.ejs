@@ -4,7 +4,7 @@
     <h3 class="panel-title">Downloads of Module per Month</h3>
   </div>
   <div class="panel-body">
-    <div id='<%= main[0].div %>' class='bar_graph'></div>
+    <div id='<%= main[0].div %>' class='bar_graph_compare'></div>
   </div>
 </div>
 <h1 class="page-header">Compare to <%= query.aggregate ? 'Aggregated Modules' : '' %></h1>
@@ -15,7 +15,7 @@
       <h3 class="panel-title">Downloads of Module per Month</h3>
     </div>
     <div class="panel-body">
-      <div id='<%= compare[i].div %>' class='bar_graph'></div>
+      <div id='<%= compare[i].div %>' class='bar_graph_compare'></div>
     </div>
   </div>
 <% } %>
