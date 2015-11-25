@@ -1,0 +1,25 @@
+<h1 class="page-header"><%= main[0].module.name %></h1>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Downloads of Module per Month</h3>
+  </div>
+  <div class="panel-body">
+    <div id='<%= main[0].div %>' class='bar_graph'></div>
+  </div>
+</div>
+<h1 class="page-header">Compare to <%= query.aggregate ? 'Aggregated Modules' : '' %></h1>
+<% for(var i = 0; i < compare.length; i++) { %>
+  <h2 class="page-header"><%= compare[i].module.name %></h1>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Downloads of Module per Month</h3>
+    </div>
+    <div class="panel-body">
+      <div id='<%= compare[i].div %>' class='bar_graph'></div>
+    </div>
+  </div>
+<% } %>
+<%- main[0].graph %>
+<% for(var i = 0; i < compare.length; i++) { %>
+<%- compare[i].graph %>
+<% } %>

@@ -1,0 +1,30 @@
+<h1 class="page-header"><%= name %></h1>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Compare Modules</h3>
+  </div>
+  <div class="panel-body">
+    <form action="/module/compare_results" method="get">
+      <div class="form-group <%- query.errors && query.errors.compare1 ? 'has-error' : '' %>">
+        <label for="compareModule">Module</label>
+        <input type="text" class="form-control" id="compare1" name="compare1" value="<%= query.compare1 ? query.compare1 : name %>">
+        <p class="help-block">
+          <%- query.errors && query.errors.compare1 ? query.errors.compare1 : 'Name of main module to compare against' %>
+        </p>
+      </div>
+      <div class="form-group <%- query.errors && query.errors.compare2 ? 'has-error' : '' %>">
+        <label for="compareModules">Modules To Compare Against</label>
+        <input type="text" class="form-control" id="compare2" name="compare2" value="<%= query.compare1 ? query.compare2 : '' %>">
+        <p class="help-block">
+          <%- query.errors && query.errors.compare2 ? query.errors.compare2 : 'Comma seperated list of modules you wish to compare. Example: <strong>mysql,pg,redis</strong>' %>
+        </p>
+      </div>
+      <div class="checkbox">
+        <label>
+          <input name="aggregate" id="aggregate" type="checkbox" <%= query.aggregate == 'on' ? 'checked' : '' %>> Aggregate up module downloads
+        </label>
+      </div>
+      <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+  </div>
+</div>

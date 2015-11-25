@@ -41,7 +41,7 @@
           <a class="navbar-brand" href="/"><%= title %></a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-          <form class="navbar-form navbar-right" action="/module/search" method="post">
+          <form class="navbar-form navbar-right" action="/module/search" method="get">
             <input type="text" name="search" id="search" class="form-control" placeholder="Search...">
           </form>
         </div>
@@ -52,7 +52,13 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li class="active"><a href="#"><%= active %> <span class="sr-only">(current)</span></a></li>
+            <% for(var i = 0; i < menu.length; i++) { %>
+              <% if(menu[i].active) { %>
+            <li class="active"><a href="#"><%= menu[i].name %><span class="sr-only">(current)</span></a></li>
+              <% } else { %>
+            <li><a href="<%- menu[i].href %>"><%= menu[i].name %><span class="sr-only">(current)</span></a></li>
+              <% } %>
+            <% } %>
           </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">

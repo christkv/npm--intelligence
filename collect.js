@@ -290,13 +290,17 @@ var updateModule = function(moduleName, db, options) {
 
 // Seed modules
 var seedModules = [
-  'mongodb', 'electron-installer-dmg', 'electron-installer-fixture-windows', 'electron-installer-squirrel-windows',
+  'mongodb',
+  // Mongo-js organization
+  'electron-installer-dmg', 'electron-installer-fixture-windows', 'electron-installer-squirrel-windows',
   'electron-squirrel-startup', 'eslint-config-mongodb-js', 'evergreen', 'get-mongodb-version', 'jsonpatch-to-mongodb',
   'jsonpath-to-dot', 'mongodb-bridge', 'mongodb-collection-model', 'mongodb-collection-sample', 'mongodb-connection-model',
   'mongodb-database-model', 'mongodb-datasets', 'mongodb-dbpath', 'mongodb-deployment-model', 'mongodb-download-url',
   'mongodb-extended-json', 'mongodb-favicon', 'mongodb-index-model', 'mongodb-instance-model', 'mongodb-js-precommit',
   'mongodb-log', 'mongodb-ns', 'mongodb-runner', 'mongodb-schema', 'mongodb-security', 'mongodb-top', 'mongodb-trigger',
-  'mongodb-url', 'mongodb-version-list', 'mongodb-version-manager', 'mongoscope-client'
+  'mongodb-url', 'mongodb-version-list', 'mongodb-version-manager', 'mongoscope-client',
+  // Db's to check up against
+  'mysql', 'pg', 'redis','rethinkdb','mssql', 'cassandra-driver'
 ];
 
 // var seedModules = ['sycamore-platform']
